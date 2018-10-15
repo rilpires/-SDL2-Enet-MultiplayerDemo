@@ -14,7 +14,7 @@ class Network {
         Network( );
         void            setSocketPort( uint16_t port );
         void            connectWith( const char* _ip , uint16_t port );
-        ENetEvent*      pollEvents( ENetEvent* ev );
+        int             pollEvents( ENetEvent* ev );
         void            sendPacket( void* data , size_t data_size , uint8_t channel , bool reliable = true );
 };
 

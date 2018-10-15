@@ -24,21 +24,26 @@ void            Network::connectWith( const char* _ip , uint16_t port ){
     if( peer == NULL ){
         std::cout<< "peer == NULL" << std::endl;
     }
-    ENetEvent ev;
-    if( enet_host_service( host , &ev , 5000 ) <= 0 ){
+    /*
+    ENetEvent* ev;
+    if( enet_host_service( host , ev , 5000 ) <= 0 ){
         std::cout<< "Couldn't connect with " << other_address.host << ":" << other_address.port << std::endl;
     }else{
         std::cout<< "Successfully Connected with " << other_address.host << ":" << other_address.port << std::endl;
-        connected_peers.push_back( ev.peer );
+        connected_peers.push_back( ev->peer );
     }
+    */
 }
 
-ENetEvent*      Network::pollEvents( ENetEvent* ev ){
+int      Network::pollEvents( ENetEvent* ev ){
     if( enet_host_service( host , ev , 0 ) <= 0 ){
-        return NULL;
+        return 0;
     }
     // Event occurred:
     if( ev->type == ENET_EVENT_TYPE_CONNECT ){
+        if( my_adress.host == ev->peer->address.host ){
+            std::cout << "I'm connecting with myself!" << std::endl;
+        }
         connected_peers.push_back( ev->peer );
     } else 
     if( ev->type == ENET_EVENT_TYPE_DISCONNECT ) {
@@ -48,7 +53,7 @@ ENetEvent*      Network::pollEvents( ENetEvent* ev ){
             break;
         }
     }
-    return ev;
+    return 1;
 }
 
 void            Network::sendPacket( void* data , size_t data_size , enet_uint8 channel , bool reliable ){
