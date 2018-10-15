@@ -8,8 +8,13 @@ GAME_OBJECT_FILES := $(patsubst %.cpp,%.o,$(GAME_CPP_FILES))
 OBJECT_FILES := $(ENGINE_OBJECT_FILES) $(GAME_OBJECT_FILES)
 
 
-INCLUDE_DIRS := Engine/ Engine/enet-1.3.13/include src/  ../SDL2_image-2.0.3 \
-				../SDL2_ttf-2.0.14 ../SDL2-2.0.8/include
+INCLUDE_DIRS := src/  \
+				Engine/ \
+				Engine/enet-1.3.13/include \
+				/home/rilpires/Documentos/C++/SDL/SDL2_image-2.0.3 \
+				/home/rilpires/Documentos/C++/SDL/SDL2_ttf-2.0.14 \
+				/home/rilpires/Documentos/C++/SDL/SDL2-2.0.8/include
+
 LIBS_LINKED  := -lSDL2 -lSDL2_image -lSDL2_ttf
 
 
