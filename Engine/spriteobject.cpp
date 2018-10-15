@@ -5,6 +5,8 @@
 
 SpriteObject::SpriteObject( SDL_Texture* _tex ) : GameObject() {
     setTexture( _tex );
+	position = Vector2(0, 0);
+	rotation = 0;
     Renderer::new_active_object( this );
 }
 
@@ -58,7 +60,7 @@ void    SpriteObject::setTextureCenter( Vector2 val){
 const Vector2 SpriteObject::getSize() const{
     int w,h;
     SDL_QueryTexture( getTexture() , NULL , NULL , &w , &h );
-    return Vector2( w , h );
+    return Vector2( (float)w , (float)h );
 }
 
 

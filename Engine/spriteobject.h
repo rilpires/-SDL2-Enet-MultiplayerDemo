@@ -18,7 +18,7 @@ class SpriteObject : public GameObject{
         void            setTexture( SDL_Texture* _tex );
         Vector2         getPosition();
         void            setPosition( Vector2 v );
-        float           getRotation();
+        float          getRotation();
         void            setRotation( float v );
         Vector2         getGlobalPosition();
         Vector2         getTextureCenter();

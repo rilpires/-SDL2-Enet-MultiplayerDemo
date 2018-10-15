@@ -28,6 +28,7 @@ Vector2& Vector2::operator+= (const Vector2& v){
     y += v.y;
     return *this;
 }
+
 Vector2 Vector2::rotatedByRad( const float& rad ){
     float current_rad = atan2( y , x );
     float new_rad = current_rad + rad;

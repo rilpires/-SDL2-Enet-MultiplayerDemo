@@ -36,16 +36,16 @@ void    SpaceScenario::frameUpdate(){
 
 
 void    SpaceScenario::handlePlayerInput(){
-    if( Input::isKeyPressed(SDLK_LEFT) ){
+    if( Input::isKeyPressed( SDL_SCANCODE_LEFT ) ){
         player_ship->setRotation( player_ship->getRotation() - 0.05 );
-    } else
-    if( Input::isKeyPressed(SDLK_RIGHT) ){
+    }
+    if( Input::isKeyPressed( SDL_SCANCODE_RIGHT) ){
         player_ship->setRotation( player_ship->getRotation() + 0.05 );
     }
-    if( Input::isKeyPressed(SDLK_UP) ){
+    if( Input::isKeyPressed(SDL_SCANCODE_UP ) ){
         player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,-0.3).rotatedByRad( player_ship->getRotation() ) );
     }
-    if( Input::isKeyPressed(SDLK_DOWN) ){
+    if( Input::isKeyPressed(SDL_SCANCODE_DOWN ) ){
         player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,0.1).rotatedByRad( player_ship->getRotation() ) );
     }
     player_ship->setVelocity( player_ship->getVelocity() * 0.97 );

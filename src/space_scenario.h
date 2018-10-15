@@ -9,8 +9,8 @@ class Ship;
 class SpaceScenario : public SpriteObject{
     struct ship_packet{
         float posx;
-        float posy;
-        float rot;
+		float posy;
+		float rot;
     };
 
     private:

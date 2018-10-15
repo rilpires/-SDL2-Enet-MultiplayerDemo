@@ -46,16 +46,16 @@ void Renderer::drawEverything(){
 
             src_rect.x = 0;
             src_rect.y = 0;
-            src_rect.w = tex_size.x;
-            src_rect.h = tex_size.y;
+            src_rect.w = (int)tex_size.x;
+            src_rect.h = (int)tex_size.y;
 
             dst_rect.x = SCREEN_WIDTH * 0.5 + global_pos.x - texture_offset.x;
             dst_rect.y = SCREEN_HEIGHT * 0.5 + global_pos.y - texture_offset.y;
-            dst_rect.w = tex_size.x;
-            dst_rect.h = tex_size.y;
+            dst_rect.w = (int)tex_size.x;
+            dst_rect.h = (int)tex_size.y;
 
-            point.x = texture_offset.x;
-            point.y = texture_offset.y;
+            point.x = (int)texture_offset.x;
+            point.y = (int)texture_offset.y;
             
             SDL_RenderCopyEx( sdl_renderer , it->second->getTexture() , &src_rect , &dst_rect ,  it->second->getRotation()*( 180.0/M_PI ) , &point , SDL_FLIP_NONE );
         }

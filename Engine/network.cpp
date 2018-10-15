@@ -24,12 +24,12 @@ void            Network::connectWith( const char* _ip , uint16_t port ){
     if( peer == NULL ){
         std::cout<< "peer == NULL" << std::endl;
     }
-    ENetEvent* ev;
-    if( enet_host_service( host , ev , 5000 ) <= 0 ){
+    ENetEvent ev;
+    if( enet_host_service( host , &ev , 5000 ) <= 0 ){
         std::cout<< "Couldn't connect with " << other_address.host << ":" << other_address.port << std::endl;
     }else{
         std::cout<< "Successfully Connected with " << other_address.host << ":" << other_address.port << std::endl;
-        connected_peers.push_back( ev->peer );
+        connected_peers.push_back( ev.peer );
     }
 }
 
