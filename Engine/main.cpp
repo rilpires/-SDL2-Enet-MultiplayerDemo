@@ -6,7 +6,7 @@
 Uint32 main_timer_tick( Uint32 interval , void* param );
 void main_loop( GameObject* root_game_object );
 void frameUpdateRecursive( GameObject* root );
-int main(){
+int main( int argc , char** argv ){
     using namespace std;
     if( SDL_Init(SDL_INIT_EVERYTHING) ){
         std::cout << "SDL error: " << SDL_GetError() << std::endl;
@@ -20,7 +20,8 @@ int main(){
     }
     if( TTF_Init() != 0 ){
         std::cout << "Failed: TTF_Init()" << std::endl;
-    } 
+    }
+	enet_initialize();
 
     InitialScene* initial_object = new InitialScene();
     PhysicServer* physic_server = new PhysicServer();
