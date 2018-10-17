@@ -12,9 +12,7 @@ OBJECT_FILES := $(ENGINE_OBJECT_FILES) $(GAME_OBJECT_FILES)
 INCLUDE_DIRS := src/  \
 				Engine/ \
 				Engine/enet-1.3.13/include \
-				/home/rilpires/Documentos/C++/SDL/SDL2_image-2.0.3 \
-				/home/rilpires/Documentos/C++/SDL/SDL2_ttf-2.0.14 \
-				/home/rilpires/Documentos/C++/SDL/SDL2-2.0.8/include
+				#INCLUDE SDL PATHS HERE: SDL2 , SDL2_image and SDL2_ttf
 
 LIBS_LINKED  := -lSDL2 -lSDL2_image -lSDL2_ttf
 
