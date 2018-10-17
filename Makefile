@@ -1,9 +1,10 @@
 ENGINE_CPP_FILES    := $(wildcard Engine/*.cpp)
 ENGINE_OBJECT_FILES := $(patsubst %.cpp,%.o,$(ENGINE_CPP_FILES))
-ENET_OBJECT_FILES   := $(wildcard Engine/enet-1.3.13/*.o)
 
 GAME_CPP_FILES    := $(wildcard src/*.cpp)
 GAME_OBJECT_FILES := $(patsubst %.cpp,%.o,$(GAME_CPP_FILES))
+
+ENET_OBJECT_FILES   := $(wildcard Engine/enet-1.3.13/*.o)
 
 OBJECT_FILES := $(ENGINE_OBJECT_FILES) $(GAME_OBJECT_FILES)
 
@@ -41,6 +42,10 @@ clean:
 src/%.o: %.cpp $(ENGINE_OBJECT_FILES)
 	g++ -std=c++11 -O2 $(patsubst %,-I%,$(INCLUDE_DIRS)) -c $< -o $@
 
+Engine/enet-1.3.13/%.o:
+	./configure
+	make
+	make install
 %.o: %.cpp
 	g++ -std=c++11 -O2 $(patsubst %,-I%,$(INCLUDE_DIRS)) -c $< -o $@
 
