@@ -20,7 +20,9 @@ SpaceScenario::SpaceScenario() {
 		if (event.type == ENET_EVENT_TYPE_CONNECT) {
             cout << "Joined server: " << event.peer->address.host << ":" << event.peer->address.port << endl;
 		}
-	}
+	}else{
+        cout << "Couldn't connect with server..." << endl;
+    }
 }
 
 void    SpaceScenario::frameUpdate(){
@@ -68,7 +70,7 @@ void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
 			if (event.channelID == 0) {
 				//Received from server
 				ENetAddress* address = (ENetAddress*)event.packet->data;
-                cout << " trying to connect with peers...." << endl;
+                cout << "Trying to connect with a new peer...." << endl;
 				network.connectWith( address );
 			}else if (event.channelID == 1) {
 				//Received from peer(player)
