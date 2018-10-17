@@ -20,3 +20,5 @@ public:
 	void    start();
 
 };
+
+int main();

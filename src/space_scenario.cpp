@@ -16,9 +16,9 @@ SpaceScenario::SpaceScenario() {
 	network.connectWith(answer.c_str(), 8011);
 
 	ENetEvent event;
-	if (network.pollEvents(&event, 5000) > 0){
+	if ( network.pollEvents(&event , 5000) > 0){
 		if (event.type == ENET_EVENT_TYPE_CONNECT) {
-
+            cout << "Joined server: " << event.peer->address.host << ":" << event.peer->address.port << endl;
 		}
 	}
 }
@@ -56,14 +56,19 @@ void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
         }else
         if( event.type == ENET_EVENT_TYPE_DISCONNECT ){
             // someone disconnected
-            removeOtherShip( event.peer );
-            cout << "Someone disconnected!" << endl;
+            if( event.channelID == 0 ){
+                cout << "Server went nuts" << endl;
+            }else if( event.channelID == 1 ){
+                removeOtherShip( event.peer );
+                cout << "Someone disconnected!" << endl;
+            }
         }else
         if( event.type == ENET_EVENT_TYPE_RECEIVE ){
             //received a packet
 			if (event.channelID == 0) {
 				//Received from server
 				ENetAddress* address = (ENetAddress*)event.packet->data;
+                cout << " trying to connect with peers...." << endl;
 				network.connectWith( address );
 			}else if (event.channelID == 1) {
 				//Received from peer(player)

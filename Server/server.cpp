@@ -27,6 +27,7 @@ SpaceServer::SpaceServer(std::string ip_address ){
 				addNewPeer( event.peer );
 				break;
             ENET_EVENT_TYPE_DISCONNECT:
+				std::cout << event.peer->address.host << " disconnected" << std::endl;
                 removePeer( event.peer );
                 break;
             ENET_EVENT_TYPE_RECEIVE:
