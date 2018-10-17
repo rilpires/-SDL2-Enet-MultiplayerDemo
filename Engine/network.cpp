@@ -11,32 +11,26 @@ void            Network::setSocketPort( uint16_t port ){
     my_adress.host = ENET_HOST_ANY;
     my_adress.port = port;
     host = enet_host_create(    &my_adress , 
-                                4 /*number of connections*/, 
+                                8 /*number of connections*/, 
                                 2 /*number of channels*/, 
                                 0 /*outgoing bandwith*/ , 
                                 0 /*incoming bandwidth*/ ); 
 }
-void            Network::connectWith( const char* _ip , uint16_t port ){
-    ENetAddress other_address;
-    enet_address_set_host( &other_address , _ip );
-    other_address.port = port;
-    ENetPeer* peer = enet_host_connect( host , &other_address , 2 /* channel count */ , 0 /* any data */ ); 
-    if( peer == NULL ){
-        std::cout<< "peer == NULL" << std::endl;
-    }
-    /*
-    ENetEvent* ev;
-    if( enet_host_service( host , ev , 5000 ) <= 0 ){
-        std::cout<< "Couldn't connect with " << other_address.host << ":" << other_address.port << std::endl;
-    }else{
-        std::cout<< "Successfully Connected with " << other_address.host << ":" << other_address.port << std::endl;
-        connected_peers.push_back( ev->peer );
-    }
-    */
+void            Network::connectWith(ENetAddress* other_address) {
+	ENetPeer* peer = enet_host_connect(host, other_address, 2 /* channel count */, 0 /* any data */);
+	if (peer == NULL) {
+		std::cout << "peer == NULL" << std::endl;
+	}
+}
+void            Network::connectWith(const char* _ip, uint16_t port) {
+	ENetAddress other_address;
+	enet_address_set_host(&other_address, _ip);
+	other_address.port = port;
+	connectWith(&other_address);
 }
 
-int      Network::pollEvents( ENetEvent* ev ){
-    if( enet_host_service( host , ev , 0 ) <= 0 ){
+int      Network::pollEvents( ENetEvent* ev, uint16_t miliseconds_timeout){
+    if( enet_host_service( host , ev , miliseconds_timeout ) <= 0 ){
         return 0;
     }
     // Event occurred:

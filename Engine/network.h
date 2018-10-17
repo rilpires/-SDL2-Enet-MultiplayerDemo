@@ -13,8 +13,9 @@ class Network {
     public:
         Network( );
         void            setSocketPort( uint16_t port );
-        void            connectWith( const char* _ip , uint16_t port );
-        int             pollEvents( ENetEvent* ev );
+		void			connectWith(ENetAddress* address);
+		void			connectWith(const char* _ip, uint16_t port);
+        int             pollEvents( ENetEvent* ev , uint16_t miliseconds_timeout = 0 );
         void            sendPacket( void* data , size_t data_size , uint8_t channel , bool reliable = true );
 };
 

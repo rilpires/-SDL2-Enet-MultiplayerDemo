@@ -21,7 +21,7 @@ class SpaceScenario : public SpriteObject{
         SpaceScenario();
         
         void    handlePlayerInput();
-        void    handleNetwork(  );
+        void    handleNetwork( uint16_t miliseconds_timeout = 0);
         void    frameUpdate();
         void    addOtherShip( ENetPeer* peer );
         void    removeOtherShip( ENetPeer* peer );

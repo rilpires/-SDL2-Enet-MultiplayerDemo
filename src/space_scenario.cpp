@@ -1,32 +1,26 @@
 #include "space_scenario.h"
 #include "ship.h"
+#include "../Server/server.h"
 
-SpaceScenario::SpaceScenario(){
-    player_ship = new Ship();
-    addChild( player_ship );
+SpaceScenario::SpaceScenario() {
+	using namespace std;
+	player_ship = new Ship();
+	addChild(player_ship);
 
-    network = Network();
+	network = Network();
+	network.setSocketPort(8010);
 
-    using namespace std;
+	string answer = "";
+	cout << "Enter server ip" << endl;
+	cin >> answer;
+	network.connectWith(answer.c_str(), 8011);
 
-    string answer = "";
-    while( answer != "S" && answer != "s" && answer != "C" && answer != "c" ){
-        cout << "Server(S) or Client(C)??" << endl;
-        cin >> answer;
-    }
-    if( answer == "S" || answer == "s" ){
-        //I'm a host
-        network.setSocketPort(8010);
+	ENetEvent event;
+	if (network.pollEvents(&event, 5000) > 0){
+		if (event.type == ENET_EVENT_TYPE_CONNECT) {
 
-    }else{
-        //I'm a client
-        network.setSocketPort(8011);
-        cout << "Server IP: " << endl;
-        cin >> answer;
-        network.connectWith( answer.c_str() , 8010 );
-        handleNetwork();
-    }
-
+		}
+	}
 }
 
 void    SpaceScenario::frameUpdate(){
@@ -51,10 +45,10 @@ void    SpaceScenario::handlePlayerInput(){
     player_ship->setVelocity( player_ship->getVelocity() * 0.97 );
 }
 
-void SpaceScenario::handleNetwork( ){
+void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
     using namespace std;
     ENetEvent event;
-    while( network.pollEvents(&event) ){
+    while( network.pollEvents(&event , miliseconds_timeout ) ){
         if( event.type == ENET_EVENT_TYPE_CONNECT ){
             // someone joined!
             addOtherShip( event.peer );
@@ -67,8 +61,15 @@ void SpaceScenario::handleNetwork( ){
         }else
         if( event.type == ENET_EVENT_TYPE_RECEIVE ){
             //received a packet
-            updateFromPack( event.peer , event.packet );
-            enet_packet_destroy( event.packet );
+			if (event.channelID == 0) {
+				//Received from server
+				ENetAddress* address = (ENetAddress*)event.packet->data;
+				network.connectWith( address );
+			}else if (event.channelID == 1) {
+				//Received from peer(player)
+				updateFromPack(event.peer, event.packet);
+			}
+			enet_packet_destroy(event.packet);
         }else
         if( event.type == ENET_EVENT_TYPE_NONE ){
             //nothing to do here!
@@ -79,7 +80,7 @@ void SpaceScenario::handleNetwork( ){
     p.posx = player_ship->getPosition().x;
     p.posy = player_ship->getPosition().y;
     p.rot = player_ship->getRotation();
-    network.sendPacket( (void*)&p , sizeof(p) , 0 , true );
+    network.sendPacket( (void*)&p , sizeof(p) , 1 , true );
      
 }
 
