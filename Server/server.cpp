@@ -22,19 +22,19 @@ SpaceServer::SpaceServer(std::string ip_address ){
     while( true ){
         while( enet_host_service(host , &event , 1000.0 / 60.0 ) > 0 ){
             switch( event.type ){
-			ENET_EVENT_TYPE_CONNECT:
-				std::cout << "someone joined:" << event.peer->address.host << std::endl;
-				addNewPeer( event.peer );
-				break;
-            ENET_EVENT_TYPE_DISCONNECT:
-				std::cout << event.peer->address.host << " disconnected" << std::endl;
-                removePeer( event.peer );
-                break;
-            ENET_EVENT_TYPE_RECEIVE:
-                enet_packet_destroy( event.packet );
-                break;
-            ENET_EVENT_TYPE_NONE:
-                break;
+                case ENET_EVENT_TYPE_CONNECT:
+                    std::cout << "someone joined:" << event.peer->address.host << std::endl;
+                    addNewPeer( event.peer );
+                    break;
+                case ENET_EVENT_TYPE_DISCONNECT:
+                    std::cout << event.peer->address.host << " disconnected" << std::endl;
+                    removePeer( event.peer );
+                    break;
+                case ENET_EVENT_TYPE_RECEIVE:
+                    enet_packet_destroy( event.packet );
+                    break;
+                case ENET_EVENT_TYPE_NONE:
+                    break;
             }
         }
     }
