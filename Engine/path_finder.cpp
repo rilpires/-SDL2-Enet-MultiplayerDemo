@@ -1,4 +1,4 @@
-#include "path_finder.h"
+#include "path_finder.hpp"
 #include <iostream>
 #include <cstring>
 #include <SDL.h>

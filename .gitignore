@@ -333,3 +333,21 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/Engine/enet-1.3.13/.libs/libenet.a
+/Engine/enet-1.3.13/.libs/libenet.la
+/Engine/enet-1.3.13/.libs/libenet.lai
+/Engine/enet-1.3.13/.libs/libenet.so
+/Engine/enet-1.3.13/.libs/libenet.so.7
+/Engine/enet-1.3.13/.libs/libenet.so.7.0.1
+/Engine/enet-1.3.13/callbacks.lo
+/Engine/enet-1.3.13/compress.lo
+/Engine/enet-1.3.13/host.lo
+/Engine/enet-1.3.13/libenet.la
+/Engine/enet-1.3.13/list.lo
+/Engine/enet-1.3.13/packet.lo
+/Engine/enet-1.3.13/peer.lo
+/Engine/enet-1.3.13/protocol.lo
+/Engine/enet-1.3.13/unix.lo
+/Engine/enet-1.3.13/win32.lo
+/.vscode/c_cpp_properties.json
+/.vscode/settings.json

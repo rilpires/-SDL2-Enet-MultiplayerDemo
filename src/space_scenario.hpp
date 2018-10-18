@@ -1,12 +1,12 @@
 #ifndef SPACE_SCENARIO_H
 #define SPACE_SCENARIO_H
 
-#include <engine.h>
+#include <engine.hpp>
 #include <map>
 
 class Ship;
 
-class SpaceScenario : public SpriteObject{
+class SpaceScenario : public GameObject{
     struct ship_packet{
         float posx;
 		float posy;

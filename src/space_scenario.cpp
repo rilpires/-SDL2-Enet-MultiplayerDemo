@@ -1,23 +1,21 @@
-#include "space_scenario.h"
-#include "ship.h"
-#include "../Server/server.h"
+#include "space_scenario.hpp"
+#include "ship.hpp"
+#include "../Server/server.hpp"
 
-SpaceScenario::SpaceScenario() {
+SpaceScenario::SpaceScenario() : GameObject() {
 	using namespace std;
 	player_ship = new Ship();
 	addChild(player_ship);
 
 	network = Network();
 	network.setSocketPort(8010);
-
 	string answer = "";
 	cout << "Enter server ip" << endl;
 	cin >> answer;
-	network.connectWith(answer.c_str(), 8011);
-
-	ENetEvent event;
+    network.connectWith( answer.c_str() , 8011);
+    ENetEvent event;
 	if ( network.pollEvents(&event , 5000) > 0){
-		if (event.type == ENET_EVENT_TYPE_CONNECT) {
+        if (event.type == ENET_EVENT_TYPE_CONNECT) {
             cout << "Joined server: " << event.peer->address.host << ":" << event.peer->address.port << endl;
 		}
 	}else{
@@ -32,17 +30,18 @@ void    SpaceScenario::frameUpdate(){
 
 
 void    SpaceScenario::handlePlayerInput(){
+    float rot = player_ship->getShipSpriteObject()->getRotation();
     if( Input::isKeyPressed( SDL_SCANCODE_LEFT ) ){
-        player_ship->setRotation( player_ship->getRotation() - 0.05 );
+        player_ship->getShipSpriteObject()->setRotation( rot - 0.05 );
     }
     if( Input::isKeyPressed( SDL_SCANCODE_RIGHT) ){
-        player_ship->setRotation( player_ship->getRotation() + 0.05 );
+        player_ship->getShipSpriteObject()->setRotation( rot + 0.05 );
     }
     if( Input::isKeyPressed(SDL_SCANCODE_UP ) ){
-        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,-0.3).rotatedByRad( player_ship->getRotation() ) );
-    }
+        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,-0.3).rotatedByRad( rot ) );
+    }else 
     if( Input::isKeyPressed(SDL_SCANCODE_DOWN ) ){
-        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,0.1).rotatedByRad( player_ship->getRotation() ) );
+        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,0.1).rotatedByRad( rot ) );
     }
     player_ship->setVelocity( player_ship->getVelocity() * 0.97 );
 }
@@ -99,7 +98,7 @@ void    SpaceScenario::addOtherShip( ENetPeer* peer ){
 void    SpaceScenario::removeOtherShip( ENetPeer* peer ){
     Ship* ship = other_ships[peer];
     other_ships.erase( peer );
-    ship->exitTree();
+    delete ship;
 }
 void    SpaceScenario::updateFromPack( ENetPeer* peer , ENetPacket* packet ){
     Ship* ship = other_ships[ peer ];

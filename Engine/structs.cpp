@@ -1,4 +1,4 @@
-#include "structs.h"
+#include "structs.hpp"
 
 Vector2::Vector2(){
     x = 0;

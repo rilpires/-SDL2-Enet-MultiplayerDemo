@@ -1,9 +1,10 @@
-#include "network.h"
+#include "network.hpp"
 
 #include <iostream>
 
 Network::Network( ){
     host = NULL;
+	enet_initialize();
 }
 
 void            Network::setSocketPort( uint16_t port ){
@@ -30,7 +31,11 @@ void            Network::connectWith(const char* _ip, uint16_t port) {
 }
 
 int      Network::pollEvents( ENetEvent* ev, uint16_t miliseconds_timeout){
-    if( enet_host_service( host , ev , miliseconds_timeout ) <= 0 ){
+    int ret = enet_host_service( host , ev , miliseconds_timeout ); 
+    if( ret < 0 ){
+        return -1;
+    }else 
+    if( ret == 0 ){
         return 0;
     }
     // Event occurred:

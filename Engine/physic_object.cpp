@@ -1,13 +1,7 @@
-#include "physic_object.h"
-#include <engine.h>
+#include "physic_object.hpp"
 
-PhysicObject::PhysicObject() : SpriteObject( NULL ) {
+PhysicObject::PhysicObject() : TransformObject( GAMEOBJECT_TYPE_PHYSIC ) {
     velocity = Vector2(0,0);
-    PhysicServer::getCurrentPhysicServer()->new_physic_object( this );
-}
-
-void  PhysicObject::updatePhysics(){
-    position += velocity;
 }
 
 

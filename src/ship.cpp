@@ -1,10 +1,14 @@
-#include "ship.h"
+#include "ship.hpp"
 
 Ship::Ship( bool otherplayer_ship ) : PhysicObject() {
     if( otherplayer_ship ){
-        setTexture( Renderer::loadTexture("other_player_ship.png") );
+        SpriteObject* sprite = new SpriteObject( "other_player_ship.png" ) ;
+        addChild( sprite );
     }else{
-        setTexture( Renderer::loadTexture("player_ship.png") );
+        SpriteObject* sprite = new SpriteObject( "player_ship.png" ) ;
+        addChild( sprite );
+        setName("PlayerShipPhysic");
+        sprite->setName("Sprite");
     }
 }
 
@@ -17,5 +21,9 @@ void Ship::frameUpdate(){
         position.y += SCREEN_HEIGHT + 100;
     }while( position.y > SCREEN_HEIGHT*0.5 + 50 ){
         position.y -= SCREEN_HEIGHT + 100;
-    }
+    }    
+}
+
+SpriteObject* Ship::getShipSpriteObject(){
+    return (SpriteObject*)getChild("Sprite");
 }

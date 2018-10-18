@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <engine.h>
+#include <engine.hpp>
 
 Uint32 main_timer_tick( Uint32 interval , void* param );
 void main_loop( GameObject* root_game_object );
@@ -11,9 +11,6 @@ int main( int argc , char** argv ){
     if( SDL_Init(SDL_INIT_EVERYTHING) ){
         std::cout << "SDL error: " << SDL_GetError() << std::endl;
     }
-    if( ! _init_sdl_params() ){
-        std::cout << "Failed: _init_sdl_params()" << std::endl;
-    }
     Uint32 IMG_INIT_FLAGS = IMG_INIT_PNG | IMG_INIT_JPG;
     if( IMG_Init( IMG_INIT_FLAGS ) & IMG_INIT_FLAGS != IMG_INIT_FLAGS ){
         std::cout << "Failed: IMG_Init()" << std::endl;
@@ -21,21 +18,33 @@ int main( int argc , char** argv ){
     if( TTF_Init() != 0 ){
         std::cout << "Failed: TTF_Init()" << std::endl;
     }
-	enet_initialize();
+    /* Initializing renderer */
+    SDL_Window* sdl_window = SDL_CreateWindow("SpaceShooterVS" , 300 , 50 , SCREEN_WIDTH , SCREEN_HEIGHT , SDL_WINDOW_SHOWN );    
+    SDL_Renderer* sdl_renderer = SDL_CreateRenderer( sdl_window , -1 , SDL_RENDERER_ACCELERATED  );
+    Renderer* renderer = new Renderer( sdl_window , sdl_renderer );
 
-    InitialScene* initial_object = new InitialScene();
+    /* Initializing physic server */
     PhysicServer* physic_server = new PhysicServer();
-    PhysicServer::setCurrentPhysicServer( physic_server );
+    
+    /* Initializing root object */
+    InitialScene* initial_object = new InitialScene( renderer , physic_server );
+    
+    /* Load all resourcers with renderer */
+    renderer->loadTexture( "player_ship.png" );
+    renderer->loadTexture( "other_player_ship.png" );
+
     initial_object->init();
-    SDL_AddTimer( 1000.0 / 59.0 , main_timer_tick , NULL );
+    SDL_AddTimer( 1000.0 / 50.0 , main_timer_tick , NULL );
     SDL_Event sdl_event;
-    while(!sdl_quit){
+    bool QUIT = false;
+    while(!QUIT){
         while( SDL_PollEvent(&sdl_event) > 0 ){
             switch( sdl_event.type ){
                 case SDL_USEREVENT:
-                    /* Main loop event */
+                    /*<============ Main loop event ==============>*/
                     if( sdl_event.user.code == 0 ){
-                        main_loop( initial_object );
+                        frameUpdateRecursive( initial_object );
+                        Input::updateKeys();
                     }
                     break;
                 case SDL_KEYDOWN:
@@ -45,7 +54,7 @@ int main( int argc , char** argv ){
                     Input::receiveEvent( sdl_event );
                     break;
                 case SDL_QUIT:
-                    sdl_quit = true;
+                    QUIT = true;
                     break;
                 default:
                     break;
@@ -80,13 +89,7 @@ void frameUpdateRecursive( GameObject* root ){
     }
 }
 
-void main_loop( GameObject* initial_object  ){
-    using namespace std;
-    PhysicServer::getCurrentPhysicServer()->updatePhysics();
-    frameUpdateRecursive( initial_object );
-    Renderer::drawEverything();
-    Input::updateKeys();
-}
+
 
 
 

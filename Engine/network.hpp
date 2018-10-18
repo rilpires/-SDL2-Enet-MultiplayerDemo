@@ -5,6 +5,7 @@
 #include <enet/enet.h>
 #include <string>
 
+
 class Network {
     private:
         ENetAddress             my_adress;

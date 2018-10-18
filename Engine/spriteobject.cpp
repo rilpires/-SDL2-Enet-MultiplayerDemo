@@ -1,17 +1,14 @@
-#include "spriteobject.h"
-#include "renderer.h"
+#include "spriteobject.hpp"
+#include "initial_scene.hpp"
 
 
-
-SpriteObject::SpriteObject( SDL_Texture* _tex ) : GameObject() {
+SpriteObject::SpriteObject( SDL_Texture* _tex ) : TransformObject( GAMEOBJECT_TYPE_RENDER ) {
     setTexture( _tex );
-	position = Vector2(0, 0);
-	rotation = 0;
-    Renderer::new_active_object( this );
+    z_index = 0;
 }
-
-SpriteObject::~SpriteObject( ){
-    Renderer::exit_active_object( this );
+SpriteObject::SpriteObject( const char* path ) : TransformObject( GAMEOBJECT_TYPE_RENDER ) {
+    setTexture( Renderer::getTexture(path) );
+    z_index = 0;
 }
 
 SDL_Texture*    SpriteObject::getTexture() const {
@@ -27,27 +24,6 @@ void            SpriteObject::setTexture( SDL_Texture* _tex ){
         texture_center = Vector2(0,0);
     }
 }
-Vector2         SpriteObject::getPosition(){
-    return position;
-}
-void         SpriteObject::setPosition( Vector2 v ){
-    position = v;
-}
-float           SpriteObject::getRotation(){
-    return rotation;
-}
-void            SpriteObject::setRotation( float v ){
-    rotation = v;
-}
-Vector2         SpriteObject::getGlobalPosition(){
-    Vector2 ret = position;
-    GameObject* current_parent = getParent();
-    while( current_parent != NULL ){
-        ret += current_parent->getPosition();
-        current_parent = current_parent->getParent();
-    }
-    return ret;
-}
 
 Vector2 SpriteObject::getTextureCenter(){
     return texture_center;
@@ -62,5 +38,15 @@ const Vector2 SpriteObject::getSize() const{
     SDL_QueryTexture( getTexture() , NULL , NULL , &w , &h );
     return Vector2( (float)w , (float)h );
 }
+
+
+Renderer* SpriteObject::getRenderer() const {
+    GameObject* root = getParent();
+    while( root != NULL )
+        root = root->getParent();
+    return ((InitialScene*)root)->getRenderer();
+}
+
+
 
 
