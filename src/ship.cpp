@@ -16,7 +16,6 @@ Ship::Ship( bool otherplayer_ship ) : PhysicObject() {
         sprite->name = "Sprite";
         setMaskBit(0,true);
     }
-	cout << "ship mask " << mask;
 }
 
 void Ship::_frameUpdate(){
@@ -41,6 +40,8 @@ void Ship::takeHit(){
     if( life <= 0 ){
 		cout << "Ouch" << endl;
 		life = 15;
+		setPosition(Vector2(0,0));
+		getShipSpriteObject()->setRotation(0);
 		//queueDelete();
     }
 }

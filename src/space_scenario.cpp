@@ -67,11 +67,11 @@ void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
         }else
         if( event.type == ENET_EVENT_TYPE_DISCONNECT ){
             // someone disconnected
-            if( event.channelID == 0 ){
+			if (other_ships.find(event.peer) != other_ships.end()) {
+				removeOtherShip(event.peer);
+				cout << "Someone disconnected!" << endl;
+			}else {
                 cout << "Server went nuts" << endl;
-            }else if( event.channelID == 1 ){
-                removeOtherShip( event.peer );
-                cout << "Someone disconnected!" << endl;
             }
         }else
         if( event.type == ENET_EVENT_TYPE_RECEIVE ){

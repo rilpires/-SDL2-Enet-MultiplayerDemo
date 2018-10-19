@@ -1,5 +1,6 @@
 *.o
 *.dll
+Makefile
 Engine/enet-1.3.13/*.o
 Engine/*.o
 
