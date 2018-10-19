@@ -16,6 +16,7 @@ class GameObject {
         static int                  open_id;
         virtual void                enteredTree();
         virtual void                exitedTree();
+		bool						to_delete;
     protected:
         int                         id;
         GameObject*                 parent;
@@ -36,6 +37,8 @@ class GameObject {
         GameObject*                 getChild( int child_id );
         std::vector<GameObject*>&   getChildren(){return children;}
         bool                        isInsideTree() const ;
+		bool						isQueuedToDelete() { return to_delete; }
+		void						queueDelete();
 
 
         virtual Vector2 getPosition() const{return Vector2(0,0);}
@@ -56,6 +59,11 @@ inline bool                        GameObject::isInsideTree() const{
     }
 } 
 
+inline void			GameObject::queueDelete() { 
+	to_delete = true; 
+	for (auto it = children.begin(); it != children.end(); it++)
+		(*it)->queueDelete();
+}
 
 
 #endif

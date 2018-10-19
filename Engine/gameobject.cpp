@@ -8,14 +8,19 @@ GameObject::GameObject( uint8_t _obj_type ){
     id = open_id++;
     children = std::vector<GameObject*>(0);
     parent = NULL;
+	to_delete = false;
     name = "";
 }
 GameObject::~GameObject(){
-    for( auto it = children.rbegin() ; it != children.rend() ; it ++ ){
-        delete *it;
-    }
-    if( getParent() != NULL ){
-        getParent()->removeChild( this );
+	if (!to_delete)
+		cout << "You should'nt call delete on gameobjects!!!! use queueDelete() instead " << endl;
+	if (getParent() != NULL) {
+		getParent()->removeChild(this);
+	}
+    for( auto it = children.begin() ; it != children.end() ;){
+		GameObject* child = (*it);
+		it = children.erase(it);
+		delete child;
     }
 }
 void GameObject::addChild( GameObject* obj ){
@@ -35,7 +40,8 @@ void GameObject::removeChild( GameObject* child ){
         if( (*it) == child ){
             child->parent = NULL;
             child->exitedTree();
-            children.erase( it );
+            it = children.erase( it );
+			it--;
             return;
         }
     }

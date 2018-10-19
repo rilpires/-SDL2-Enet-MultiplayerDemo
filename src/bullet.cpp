@@ -20,13 +20,12 @@ Bullet::Bullet( Ship* ship ) : PhysicObject() {
 
 void Bullet::_frameUpdate(){
     lifetime_in_frames ++;
-    if ( lifetime_in_frames > 150 ){
-        delete this;
+    if ( lifetime_in_frames > 50 ){
+		queueDelete();
     }
 }
 
 void Bullet::_collidesWith( PhysicObject* other ){
-    return;
     if( other->name.find("Ship") != string::npos ){
         static_cast<Ship*>(other)->takeHit();
         lifetime_in_frames = 999;

@@ -7,7 +7,10 @@ class InitialScene : public GameObject {
     private:
         Renderer*       renderer;
         PhysicServer*   physic_server;
-        void            recursiveSearch( GameObject* root , std::map< int , std::vector < SpriteObject* > >* render_object_list , std::vector < PhysicObject*>* physic_object_list );
+        void            recursiveSearch( GameObject* root , 
+										std::map< int , std::vector < SpriteObject* > >* render_object_list , 
+										std::vector < PhysicObject*>* physic_object_list ,
+										std::vector < GameObject*>* to_delete_list );
     public:
         InitialScene( Renderer* rend , PhysicServer* serv );
         void                                                init();

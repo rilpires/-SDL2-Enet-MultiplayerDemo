@@ -28,6 +28,7 @@ bool                PhysicObject::checkIfCollidesWith( PhysicObject* other ){
         // Some serious math shit here
         return false;
     }
+	return false;
 }
 
 void                PhysicObject::setMaskBit(uint8_t bit_0_7 , bool val){

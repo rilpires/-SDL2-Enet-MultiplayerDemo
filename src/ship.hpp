@@ -10,7 +10,8 @@ class Ship : public PhysicObject {
         Ship( bool otherplayer_ship = false );
         virtual void    _frameUpdate();
         SpriteObject*   getShipSpriteObject();
-        void takeHit();
+		int		getCurrentLife() const { return life; }
+        void	takeHit();
 };
 
 

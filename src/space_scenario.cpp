@@ -7,9 +7,8 @@ SpaceScenario::SpaceScenario() : GameObject() {
 	using namespace std;
     player_ship = new Ship();
     addChild(player_ship);
-    addChild( new Ship(true) );
     name = "SpaceScenario";
-    return;
+
 	network = Network();
 	network.setSocketPort(8010);
 	string answer = "";
@@ -28,7 +27,7 @@ SpaceScenario::SpaceScenario() : GameObject() {
 
 void    SpaceScenario::_frameUpdate(){
     handlePlayerInput();
-    //handleNetwork();
+    handleNetwork();
 }
 
 
@@ -47,12 +46,12 @@ void    SpaceScenario::handlePlayerInput(){
         player_ship->velocity += Vector2(0,0.15).rotatedByRad( rot );
     }
     
-    if( Input::isKeyPressed(SDL_SCANCODE_Z ) ){
+    if( Input::wasKeyPressedDown(SDL_SCANCODE_Z ) ){
         new Bullet( player_ship );
-        new Bullet( player_ship );
-        new Bullet( player_ship );
-        new Bullet( player_ship );
-    }
+		next_packet_to_send.has_shot = true;
+	} else {
+		next_packet_to_send.has_shot = false;
+	}
     
     player_ship->velocity = player_ship->velocity * 0.97;
 }
@@ -93,11 +92,10 @@ void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
         }
     }
 
-    ship_packet p;
-    p.posx = player_ship->getPosition().x;
-    p.posy = player_ship->getPosition().y;
-    p.rot = player_ship->getRotation();
-    network.sendPacket( (void*)&p , sizeof(p) , 1 , true );
+	next_packet_to_send.position = player_ship->getPosition();
+	next_packet_to_send.rot= player_ship->getRotation();
+	next_packet_to_send.current_life= player_ship->getCurrentLife();
+    network.sendPacket( static_cast<void*>(&next_packet_to_send) , sizeof(ship_packet) , 1 , true );
      
 }
 
@@ -109,13 +107,19 @@ void    SpaceScenario::addOtherShip( ENetPeer* peer ){
 void    SpaceScenario::removeOtherShip( ENetPeer* peer ){
     Ship* ship = other_ships[peer];
     other_ships.erase( peer );
-    delete ship;
+	ship->queueDelete();
 }
 void    SpaceScenario::updateFromPack( ENetPeer* peer , ENetPacket* packet ){
     Ship* ship = other_ships[ peer ];
     ship_packet* p = (ship_packet*)(packet->data);
-    ship->setPosition( Vector2(p->posx,p->posy) );
-    ship->setRotation( p->rot );
+    ship->setPosition( p->position );
+	ship->setRotation(p->rot);
+	if (p->has_shot) {
+		new Bullet(ship);
+	}
+	while (ship->getCurrentLife() > p->current_life)
+		ship->takeHit();
+	
 }
 
 

@@ -36,9 +36,8 @@ SpriteObject* Ship::getShipSpriteObject(){
 
 void Ship::takeHit(){
     life --;
-    return;
     if( life <= 0 ){
-        delete this;
+		queueDelete();
     }
 }
 
