@@ -93,9 +93,9 @@ void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){
     }
 
 	next_packet_to_send.position = player_ship->getPosition();
-	next_packet_to_send.rot= player_ship->getRotation();
+	next_packet_to_send.rot= player_ship->getShipSpriteObject()->getRotation();
 	next_packet_to_send.current_life= player_ship->getCurrentLife();
-    network.sendPacket( static_cast<void*>(&next_packet_to_send) , sizeof(ship_packet) , 1 , true );
+    network.sendPacket( static_cast<void*>(&next_packet_to_send) , sizeof(next_packet_to_send) , 1 , true );
      
 }
 
@@ -113,7 +113,7 @@ void    SpaceScenario::updateFromPack( ENetPeer* peer , ENetPacket* packet ){
     Ship* ship = other_ships[ peer ];
     ship_packet* p = (ship_packet*)(packet->data);
     ship->setPosition( p->position );
-	ship->setRotation(p->rot);
+	ship->getShipSpriteObject()->setRotation(p->rot);
 	if (p->has_shot) {
 		new Bullet(ship);
 	}

@@ -12,7 +12,7 @@ Bullet::Bullet( Ship* ship ) : PhysicObject() {
         setMaskBit(1,true);
     }else{
         setMaskBit(0,true);
-    }
+	} cout << "mask :" << mask;
     velocity = Vector2(0,-6).rotatedByRad( ship->getShipSpriteObject()->rotation );
     ship->getParent()->addChild( this );
     setGlobalPosition( ship->getGlobalPosition() );

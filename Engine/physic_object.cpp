@@ -30,13 +30,15 @@ bool                PhysicObject::checkIfCollidesWith( PhysicObject* other ){
     }
 	return false;
 }
-
+int           PhysicObject::getMaskBit(uint8_t bit_0_7) {
+	return (mask >> bit_0_7) & 1U;
+}
 void                PhysicObject::setMaskBit(uint8_t bit_0_7 , bool val){
     if( val ){
-        mask = mask | (int)pow(2,bit_0_7);
+        mask |= 1UL << bit_0_7;
     }
     else{
-        mask = mask & ( -1 - (int)pow(2,bit_0_7) );
+		mask &= ~( 1UL << bit_0_7 );
     }
 }
 

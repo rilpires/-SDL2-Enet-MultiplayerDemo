@@ -40,7 +40,7 @@ class PhysicObject : public TransformObject {
         PhysicObject();
         ~PhysicObject();
 
-        int                         getMaskBit(uint8_t bit_0_7 ){return mask|bit_0_7 ;}
+		int                         getMaskBit(uint8_t bit_0_7);
         void                        setMaskBit(uint8_t bit_0_7 , bool val);
 
         std::map<int,PhysicObject*> getCollidingBodies(){return colliding_bodies;};
