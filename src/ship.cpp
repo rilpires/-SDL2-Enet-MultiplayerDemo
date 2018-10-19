@@ -6,8 +6,9 @@ Ship::Ship( bool otherplayer_ship ) : PhysicObject() {
     if( otherplayer_ship ){
         SpriteObject* sprite = new SpriteObject( "other_player_ship.png" ) ;
         addChild( sprite );
-        setMaskBit(1,true);
         name = "OtherPlayerShip";
+		sprite->name = "Sprite";
+		setMaskBit(1, true);
     }else{
         SpriteObject* sprite = new SpriteObject( "player_ship.png" ) ;
         addChild( sprite );
