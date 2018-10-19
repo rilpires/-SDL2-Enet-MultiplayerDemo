@@ -30,7 +30,7 @@ void Input::init(){
 void Input::receiveEvent( SDL_Event event ){
     if( event.type == SDL_KEYDOWN || event.type == SDL_KEYUP ){
         Sint32 keycode = event.key.keysym.scancode;
-        keys[keycode].pressed_down = ( event.type == SDL_KEYDOWN );
+        keys[keycode].pressed_down = ( event.type == SDL_KEYDOWN ) && !keys[keycode].pressed ;
         keys[keycode].pressed      = ( event.type == SDL_KEYDOWN );
         keys[keycode].pressed_up   = ( event.type == SDL_KEYUP );
     }
@@ -47,6 +47,15 @@ void Input::updateKeys( ){
 bool Input::isKeyPressed( SDL_Keycode scancode ){
     return keys[scancode].pressed;
 }
+
+bool Input::wasKeyPressedDown( SDL_Keycode scancode){
+    return keys[scancode].pressed_down;
+}
+bool Input::wasKeyPressedUp( SDL_Keycode scancode){
+    return keys[scancode].pressed_up;
+}
+
+
 
 
 

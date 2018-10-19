@@ -1,9 +1,7 @@
 #ifndef INITIAL_SCENE_H
 #define INITIAL_SCENE_H
 
-#include "gameobject.hpp"
-#include "renderer.hpp"
-#include "physic_server.hpp"
+#include <engine.hpp>
 
 class InitialScene : public GameObject {
     private:
@@ -13,7 +11,7 @@ class InitialScene : public GameObject {
     public:
         InitialScene( Renderer* rend , PhysicServer* serv );
         void                                                init();
-        void                                                frameUpdate();
+        void                                                _frameUpdate();
         Renderer*                                           getRenderer() const { return renderer ; };
         PhysicServer*                                       getPhysicServer() const { return physic_server ; };
 };

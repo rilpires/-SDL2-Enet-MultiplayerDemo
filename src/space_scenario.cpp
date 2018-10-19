@@ -1,12 +1,15 @@
 #include "space_scenario.hpp"
 #include "ship.hpp"
 #include "../Server/server.hpp"
+#include "bullet.hpp"
 
 SpaceScenario::SpaceScenario() : GameObject() {
 	using namespace std;
-	player_ship = new Ship();
-	addChild(player_ship);
-
+    player_ship = new Ship();
+    addChild(player_ship);
+    addChild( new Ship(true) );
+    name = "SpaceScenario";
+    return;
 	network = Network();
 	network.setSocketPort(8010);
 	string answer = "";
@@ -23,27 +26,35 @@ SpaceScenario::SpaceScenario() : GameObject() {
     }
 }
 
-void    SpaceScenario::frameUpdate(){
+void    SpaceScenario::_frameUpdate(){
     handlePlayerInput();
-    handleNetwork();
+    //handleNetwork();
 }
 
 
 void    SpaceScenario::handlePlayerInput(){
     float rot = player_ship->getShipSpriteObject()->getRotation();
     if( Input::isKeyPressed( SDL_SCANCODE_LEFT ) ){
-        player_ship->getShipSpriteObject()->setRotation( rot - 0.05 );
+        player_ship->getShipSpriteObject()->rotation -= 0.05;
     }
     if( Input::isKeyPressed( SDL_SCANCODE_RIGHT) ){
-        player_ship->getShipSpriteObject()->setRotation( rot + 0.05 );
+        player_ship->getShipSpriteObject()->rotation += 0.05;
     }
     if( Input::isKeyPressed(SDL_SCANCODE_UP ) ){
-        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,-0.3).rotatedByRad( rot ) );
+        player_ship->velocity += Vector2(0,-0.3).rotatedByRad( rot );
     }else 
     if( Input::isKeyPressed(SDL_SCANCODE_DOWN ) ){
-        player_ship->setVelocity( player_ship->getVelocity() + Vector2(0,0.1).rotatedByRad( rot ) );
+        player_ship->velocity += Vector2(0,0.15).rotatedByRad( rot );
     }
-    player_ship->setVelocity( player_ship->getVelocity() * 0.97 );
+    
+    if( Input::isKeyPressed(SDL_SCANCODE_Z ) ){
+        new Bullet( player_ship );
+        new Bullet( player_ship );
+        new Bullet( player_ship );
+        new Bullet( player_ship );
+    }
+    
+    player_ship->velocity = player_ship->velocity * 0.97;
 }
 
 void SpaceScenario::handleNetwork( uint16_t miliseconds_timeout){

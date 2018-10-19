@@ -22,7 +22,7 @@ class SpaceScenario : public GameObject{
         
         void    handlePlayerInput();
         void    handleNetwork( uint16_t miliseconds_timeout = 0);
-        void    frameUpdate();
+        void    _frameUpdate();
         void    addOtherShip( ENetPeer* peer );
         void    removeOtherShip( ENetPeer* peer );
         void    updateFromPack( ENetPeer* peer , ENetPacket* packet );

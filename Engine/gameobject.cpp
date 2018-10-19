@@ -1,4 +1,5 @@
 #include "gameobject.hpp"
+#include "physic_object.hpp"
 
 int GameObject::open_id = 0;
 
@@ -9,33 +10,40 @@ GameObject::GameObject( uint8_t _obj_type ){
     parent = NULL;
     name = "";
 }
-
+GameObject::~GameObject(){
+    for( auto it = children.rbegin() ; it != children.rend() ; it ++ ){
+        delete *it;
+    }
+    if( getParent() != NULL ){
+        getParent()->removeChild( this );
+    }
+}
 void GameObject::addChild( GameObject* obj ){
+    //std::cout<< "("<<getId()<<")"<<name<<" adding as a child: ("<<obj->getId()<<")" << obj->name << std::endl;
     if(obj != NULL && obj->getParent() == NULL ){
         children.push_back( obj );
         obj->parent = this;
         if( isInsideTree() ){
             obj->enteredTree();
         }
-        else{
-            obj->exitedTree();
-        }
-        
     }
 }
 
 void GameObject::removeChild( GameObject* child ){
+    //std::cout<< "("<<getId()<<")"<<name<<" removing child: ("<<child->getId()<<")" << child->name << std::endl;
     for( auto it = children.begin() ; it != children.end() ; it ++ ){
         if( (*it) == child ){
+            child->parent = NULL;
+            child->exitedTree();
             children.erase( it );
-            break;
+            return;
         }
     }
 }
 
 GameObject* GameObject::getChild( std::string child_name ){
     for( auto it = children.begin() ; it != children.end() ; it ++ ){
-        if( (*it)->getName() == child_name )
+        if( (*it)->name == child_name )
             return *it;
     }
     return NULL;
@@ -50,3 +58,8 @@ GameObject* GameObject::getChild( int child_id ){
 }
 
 
+void    GameObject::enteredTree(){
+}
+
+void GameObject::exitedTree(){
+}

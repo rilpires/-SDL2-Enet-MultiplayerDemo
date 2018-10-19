@@ -5,7 +5,7 @@
 
 Uint32 main_timer_tick( Uint32 interval , void* param );
 void main_loop( GameObject* root_game_object );
-void frameUpdateRecursive( GameObject* root );
+void _frameUpdateRecursive( GameObject* root );
 int main( int argc , char** argv ){
     using namespace std;
     if( SDL_Init(SDL_INIT_EVERYTHING) ){
@@ -32,6 +32,7 @@ int main( int argc , char** argv ){
     /* Load all resourcers with renderer */
     renderer->loadTexture( "player_ship.png" );
     renderer->loadTexture( "other_player_ship.png" );
+    renderer->loadTexture( "bullet.png" );
 
     initial_object->init();
     SDL_AddTimer( 1000.0 / 50.0 , main_timer_tick , NULL );
@@ -43,7 +44,7 @@ int main( int argc , char** argv ){
                 case SDL_USEREVENT:
                     /*<============ Main loop event ==============>*/
                     if( sdl_event.user.code == 0 ){
-                        frameUpdateRecursive( initial_object );
+                        _frameUpdateRecursive( initial_object );
                         Input::updateKeys();
                     }
                     break;
@@ -81,11 +82,11 @@ Uint32 main_timer_tick( Uint32 interval , void* param ){
     return interval;
 }
 
-void frameUpdateRecursive( GameObject* root ){
-    root->frameUpdate();
+void _frameUpdateRecursive( GameObject* root ){
+    root->_frameUpdate();
     std::vector<GameObject*> children = root->getChildren();
     for( auto it = children.begin() ; it != children.end() ; it++ ){
-        frameUpdateRecursive( *it );
+        _frameUpdateRecursive( *it );
     }
 }
 

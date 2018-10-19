@@ -4,19 +4,18 @@ InitialScene::InitialScene( Renderer* rend , PhysicServer* server ):GameObject(G
 {
     physic_server = server;
     renderer = rend;
+    name = "InitialScene";
 }
 
-void  InitialScene::frameUpdate(){
+void  InitialScene::_frameUpdate(){
     using namespace std;
-    
     
     map< int , vector < SpriteObject* > > render_object_list;
     vector < PhysicObject*> physic_object_list;
     
-
     recursiveSearch( this , &render_object_list , &physic_object_list );
-    renderer->drawEverything( render_object_list );
     physic_server->updateEverything( physic_object_list );
+    renderer->drawEverything( render_object_list );
 }
 
 

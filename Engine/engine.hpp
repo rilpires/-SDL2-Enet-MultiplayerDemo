@@ -1,4 +1,5 @@
 
+
 #include "structs.hpp"
 #include "network.hpp"
 #include "input.hpp" 
@@ -16,6 +17,3 @@
 
 
 
-
-//
-#include <iostream>

@@ -5,6 +5,7 @@
 #include <vector>
 
 class PhysicServer{
+        Rect2                   getLimits(std::vector<PhysicObject*>& all_physic_objects);
     public:
         PhysicServer();
         void                    updateEverything( std::vector<PhysicObject*>& all_physic_objects );

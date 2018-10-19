@@ -26,12 +26,13 @@ SpaceServer::SpaceServer(std::string ip_address ){
                 case ENET_EVENT_TYPE_CONNECT:
                     char ip_address[256];
                     enet_address_get_host_ip( &(event.peer->address) , ip_address , 256 );
-                    cout << "someone joined:" << std::endl;
-                    cout << "host_ip: " << ip_address << endl;
+                    cout << ip_address << " joined" << std::endl;
                     addNewPeer( event.peer );
                     break;
                 case ENET_EVENT_TYPE_DISCONNECT:
-                    std::cout << event.peer->address.host << " disconnected" << std::endl;
+                    char ip_address[256];
+                    enet_address_get_host_ip( &(event.peer->address) , ip_address , 256 );
+                    std::cout << ip_address << " disconnected" << std::endl;
                     removePeer( event.peer );
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:

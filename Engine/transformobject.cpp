@@ -24,3 +24,9 @@ float     TransformObject::getGlobalRotation() const {
     }
     return ret;
 }
+
+void        TransformObject::setGlobalPosition(const Vector2& val){
+    Vector2 current_global_position = getGlobalPosition();
+    setPosition( getPosition() + val - current_global_position  );
+}
+

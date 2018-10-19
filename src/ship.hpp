@@ -5,10 +5,13 @@
 
 class Ship : public PhysicObject {
     private:
+        int life;
     public:
         Ship( bool otherplayer_ship = false );
-        virtual void    frameUpdate();
+        virtual void    _frameUpdate();
         SpriteObject*   getShipSpriteObject();
+        void takeHit();
 };
+
 
 #endif

@@ -10,23 +10,25 @@ enum GAMEOBJECT_TYPE : uint8_t {
     GAMEOBJECT_TYPE_INITIAL_SCENE ,  
     GAMEOBJECT_TYPE_RENDER , 
     GAMEOBJECT_TYPE_PHYSIC };
-
 class GameObject {
     private:
         uint8_t                     obj_type;
         static int                  open_id;
+        virtual void                enteredTree();
+        virtual void                exitedTree();
     protected:
         int                         id;
-        std::string                 name;
         GameObject*                 parent;
         std::vector<GameObject*>    children;
     public:
+
+        std::string                 name;
+
         GameObject( uint8_t _obj_type = GAMEOBJECT_TYPE_DEFAULT );
+        ~GameObject();
         
         uint8_t                     getObjectType(){return obj_type;}
         int                         getId(){return id;};
-        std::string                 getName(){return name;};
-        void                        setName( std::string _name ){name = _name;}
         void                        addChild( GameObject* child );
         void                        removeChild( GameObject* child );
         GameObject*                 getParent() const{return parent;};
@@ -39,9 +41,7 @@ class GameObject {
         virtual Vector2 getPosition() const{return Vector2(0,0);}
         virtual float   getRotation() const{return 0;}
 
-        virtual void    frameUpdate(){};
-        virtual void    enteredTree(){};
-        virtual void    exitedTree(){};
+        virtual void    _frameUpdate(){};
          
 };
 

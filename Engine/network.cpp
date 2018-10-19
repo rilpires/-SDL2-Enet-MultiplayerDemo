@@ -1,5 +1,6 @@
 #include "network.hpp"
 
+
 #include <iostream>
 
 Network::Network( ){
@@ -40,9 +41,6 @@ int      Network::pollEvents( ENetEvent* ev, uint16_t miliseconds_timeout){
     }
     // Event occurred:
     if( ev->type == ENET_EVENT_TYPE_CONNECT ){
-        if( my_adress.host == ev->peer->address.host ){
-            std::cout << "I'm connecting with myself!" << std::endl;
-        }
         connected_peers.push_back( ev->peer );
     } else 
     if( ev->type == ENET_EVENT_TYPE_DISCONNECT ) {

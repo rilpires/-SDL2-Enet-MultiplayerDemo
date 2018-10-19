@@ -1,18 +1,23 @@
 #include "ship.hpp"
 
 Ship::Ship( bool otherplayer_ship ) : PhysicObject() {
+    setShapeCircle( 15 );
+    life = 15;
     if( otherplayer_ship ){
         SpriteObject* sprite = new SpriteObject( "other_player_ship.png" ) ;
         addChild( sprite );
+        setMaskBit(1,true);
+        name = "OtherPlayerShip";
     }else{
         SpriteObject* sprite = new SpriteObject( "player_ship.png" ) ;
         addChild( sprite );
-        setName("PlayerShipPhysic");
-        sprite->setName("Sprite");
+        name = "PlayerShip";
+        sprite->name = "Sprite";
+        setMaskBit(0,true);
     }
 }
 
-void Ship::frameUpdate(){
+void Ship::_frameUpdate(){
     while( position.x < -SCREEN_WIDTH*0.5 - 50 ){
         position.x += SCREEN_WIDTH + 100;
     }while( position.x > SCREEN_WIDTH*0.5 + 50 ){
@@ -27,3 +32,13 @@ void Ship::frameUpdate(){
 SpriteObject* Ship::getShipSpriteObject(){
     return (SpriteObject*)getChild("Sprite");
 }
+
+
+void Ship::takeHit(){
+    life --;
+    return;
+    if( life <= 0 ){
+        delete this;
+    }
+}
+

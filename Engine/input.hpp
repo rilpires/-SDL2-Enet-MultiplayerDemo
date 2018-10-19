@@ -18,6 +18,8 @@ class Input{
         static void init( );
         static void receiveEvent( SDL_Event event );
         static bool isKeyPressed( SDL_Keycode scancode);
+        static bool wasKeyPressedDown( SDL_Keycode scancode);
+        static bool wasKeyPressedUp( SDL_Keycode scancode);
         static void updateKeys();
 };
 
