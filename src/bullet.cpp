@@ -13,7 +13,7 @@ Bullet::Bullet( Ship* ship ) : PhysicObject() {
     }else{
         setMaskBit(0,true);
 	}
-    velocity = Vector2(0,-6).rotatedByRad( ship->getShipSpriteObject()->rotation );
+    velocity = Vector2(0,-7).rotatedByRad( ship->getShipSpriteObject()->rotation );
     ship->getParent()->addChild( this );
     setGlobalPosition( ship->getGlobalPosition() );
 }
@@ -21,7 +21,7 @@ Bullet::Bullet( Ship* ship ) : PhysicObject() {
 void Bullet::_frameUpdate(){
     lifetime_in_frames ++;
     if ( lifetime_in_frames > 50 ){
-		queueDelete();
+        queueDelete();
     }
 }
 

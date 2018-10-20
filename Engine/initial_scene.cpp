@@ -39,13 +39,13 @@ void   InitialScene::recursiveSearch(	GameObject* root ,
 			to_delete_list->push_back( *it );
 		}
 		else {
+			recursiveSearch(*it, render_object_list, physic_object_list , to_delete_list );
 			if ((*it)->getObjectType() == GAMEOBJECT_TYPE_RENDER) {
 				(*render_object_list)[((SpriteObject*)(*it))->getZindex()].push_back((SpriteObject*)(*it));
 			} else
 			if ((*it)->getObjectType() == GAMEOBJECT_TYPE_PHYSIC) {
 				(*physic_object_list).push_back((PhysicObject*)(*it));
 			}
-			recursiveSearch(*it, render_object_list, physic_object_list , to_delete_list );
 		}
     }
 }

@@ -4,12 +4,14 @@ TransformObject::TransformObject(uint8_t _obj_type) : GameObject(_obj_type) {
     position = Vector2(0,0);
     rotation = 0;
 }
-
+TransformObject::~TransformObject(){    
+}
 
 Vector2     TransformObject::getGlobalPosition() const {
     Vector2 ret = getPosition();
     GameObject* parent = getParent();
     while( parent != NULL ){
+        ret = ret.rotatedByRad( parent->getRotation() );
         ret += parent->getPosition();
         parent = parent->getParent();
     }

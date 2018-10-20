@@ -26,7 +26,7 @@ class GameObject {
         std::string                 name;
 
         GameObject( uint8_t _obj_type = GAMEOBJECT_TYPE_DEFAULT );
-        ~GameObject();
+        virtual ~GameObject();
         
         uint8_t                     getObjectType(){return obj_type;}
         int                         getId(){return id;};

@@ -15,17 +15,19 @@ extern const int SCREEN_HEIGHT;
 class Renderer{
     private:
         SDL_Window*                                         window;
-        SDL_Renderer*                                       sdl_renderer;
-        static std::map<std::string,SDL_Texture*>           loaded_textures;           
+        static SDL_Renderer*                                sdl_renderer;
+        static std::map<std::string,SDL_Surface*>           loaded_surfaces;           
     
     public:
 
         Renderer( SDL_Window* sdl_window , SDL_Renderer* sdl_rend );
         void                    drawEverything( std::map< int , std::vector < SpriteObject* > > all_objects );
 
-        static SDL_Texture*     getTexture( std::string path );
-        void                    loadTexture( const char* resource_path );
+        static SDL_Surface*     getSurface( const char* resource_path );
+        void                    loadSurface( const char* resource_path );
         SDL_Texture*            textureFromTTF( std::string text , SDL_Color color , TTF_Font* font );
+        static SDL_Renderer*    getSDLRenderer(){return sdl_renderer;}
+
 };
 
 

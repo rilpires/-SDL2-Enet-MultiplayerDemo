@@ -7,7 +7,9 @@ SpaceScenario::SpaceScenario() : GameObject() {
 	using namespace std;
     player_ship = new Ship();
     addChild(player_ship);
+    //addChild(new Ship(true));
     name = "SpaceScenario";
+
 
 	network = Network();
 	network.setSocketPort(8010);
@@ -27,7 +29,7 @@ SpaceScenario::SpaceScenario() : GameObject() {
 
 void    SpaceScenario::_frameUpdate(){
     handlePlayerInput();
-    handleNetwork();
+    //handleNetwork();
 }
 
 

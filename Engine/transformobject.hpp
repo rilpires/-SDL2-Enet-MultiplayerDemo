@@ -10,6 +10,7 @@ class TransformObject : public GameObject {
         float       rotation;
         
         TransformObject( uint8_t _obj_type );
+        ~TransformObject();
         
         void        setPosition( const Vector2& new_val ){position=new_val;};
         Vector2     getPosition() const final {return position;};

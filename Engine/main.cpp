@@ -20,7 +20,7 @@ int main( int argc , char** argv ){
     }
     /* Initializing renderer */
     SDL_Window* sdl_window = SDL_CreateWindow("SpaceShooterVS" , 300 , 50 , SCREEN_WIDTH , SCREEN_HEIGHT , SDL_WINDOW_SHOWN );    
-    SDL_Renderer* sdl_renderer = SDL_CreateRenderer( sdl_window , -1 , SDL_RENDERER_ACCELERATED  );
+    SDL_Renderer* sdl_renderer = SDL_CreateRenderer( sdl_window , -1 , SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE  );
     Renderer* renderer = new Renderer( sdl_window , sdl_renderer );
 
     /* Initializing physic server */
@@ -30,9 +30,11 @@ int main( int argc , char** argv ){
     InitialScene* initial_object = new InitialScene( renderer , physic_server );
     
     /* Load all resourcers with renderer */
-    renderer->loadTexture( "player_ship.png" );
-    renderer->loadTexture( "other_player_ship.png" );
-    renderer->loadTexture( "bullet.png" );
+    renderer->loadSurface( "player_ship.png" );
+    renderer->loadSurface( "other_player_ship.png" );
+    renderer->loadSurface( "bullet.png" );
+    renderer->loadSurface( "galaxy_bg.png" );
+    //cout << SDL_GetError() << endl;
 
     initial_object->init();
     SDL_AddTimer( 1000.0 / 50.0 , main_timer_tick , NULL );

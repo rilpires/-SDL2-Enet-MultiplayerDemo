@@ -6,6 +6,10 @@
 
 using namespace std;
 
+#include <ostream>
+void _print( const std::string& a );
+
+
 struct Vector2{
     float x;
     float y;
@@ -97,12 +101,6 @@ inline Rect2::Rect2( float _x , float _y , float _w , float _h ){
     w = _w;
     h = _h;
 }
-
-
-
-
-
-#include <ostream>
 std::ostream& operator<< ( std::ostream& os , const Vector2& v );
 
 #endif

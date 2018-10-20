@@ -1,15 +1,19 @@
 #include "path_finder.hpp"
 #include "renderer.hpp"
 
-std::map<std::string,SDL_Texture*>           Renderer::loaded_textures;
+SDL_Renderer*                                Renderer::sdl_renderer = NULL;
+std::map<std::string,SDL_Surface*>           Renderer::loaded_surfaces;
 
 Renderer::Renderer( SDL_Window* sdl_window , SDL_Renderer* rend ){
+    if( sdl_renderer != NULL ){
+        std::cout << "Already has a renderer!" << std::endl;
+    }
     sdl_renderer = rend;
     window = sdl_window;
 }
 
-SDL_Texture*      Renderer::getTexture( std::string path ){
-    return loaded_textures[ path ];
+SDL_Surface*      Renderer::getSurface( const char* resource_path ){
+    return loaded_surfaces[ string( resource_path ) ];
 }
 
 void Renderer::drawEverything( std::map< int , std::vector < SpriteObject* > > all_objects ){
@@ -23,20 +27,21 @@ void Renderer::drawEverything( std::map< int , std::vector < SpriteObject* > > a
 
             Vector2 tex_size = (*it2)->getSize();
             Vector2 global_pos = (*it2)->getGlobalPosition();
-            Vector2 texture_offset = (*it2)->getTextureCenter();
+            Vector2 texture_offset = (*it2)->texture_center;
+            Vector2 scale = (*it2)->scale;
 
             src_rect.x = 0;
             src_rect.y = 0;
-            src_rect.w = (int)tex_size.x;
-            src_rect.h = (int)tex_size.y;
+            src_rect.w = tex_size.x;
+            src_rect.h = tex_size.y;
 
-            dst_rect.x = SCREEN_WIDTH * 0.5 + global_pos.x - texture_offset.x;
-            dst_rect.y = SCREEN_HEIGHT * 0.5 + global_pos.y - texture_offset.y;
-            dst_rect.w = (int)tex_size.x;
-            dst_rect.h = (int)tex_size.y;
+            dst_rect.x = SCREEN_WIDTH * 0.5 + global_pos.x - texture_offset.x * abs(scale.x) ;
+            dst_rect.y = SCREEN_HEIGHT * 0.5 + global_pos.y - texture_offset.y * abs(scale.y);
+            dst_rect.w = tex_size.x * abs(scale.x);
+            dst_rect.h = tex_size.y * abs(scale.y);
 
-            point.x = (int)texture_offset.x;
-            point.y = (int)texture_offset.y;
+            point.x = texture_offset.x * abs(scale.x);
+            point.y = texture_offset.y * abs(scale.y);
             
             SDL_RenderCopyEx( sdl_renderer , (*it2)->getTexture() , &src_rect , &dst_rect ,  (*it2)->getGlobalRotation()*( 180.0/M_PI ) , &point , SDL_FLIP_NONE );
         }
@@ -45,10 +50,17 @@ void Renderer::drawEverything( std::map< int , std::vector < SpriteObject* > > a
 }
 
 
-void     Renderer::loadTexture( const char* resource_path ){
-    SDL_Texture* tex = IMG_LoadTexture( sdl_renderer , getResPath( resource_path ).c_str() );
-    SDL_SetTextureBlendMode( tex , SDL_BLENDMODE_BLEND );
-    loaded_textures[ std::string(resource_path) ] = tex; 
+void     Renderer::loadSurface( const char* resource_path ){
+    string name(resource_path);
+    SDL_Surface* s;
+    if( name.find(".jpg") != string::npos ){
+        cout << "Loading jpg images are not supported" << name << endl;
+        return;
+    }else{
+        s = IMG_Load( getResPath(resource_path).c_str() ); 
+    }
+    SDL_SetSurfaceBlendMode( s , SDL_BLENDMODE_BLEND );
+    loaded_surfaces[ std::string(resource_path) ] = s;
 }
 
 SDL_Texture*     Renderer::textureFromTTF( std::string text , SDL_Color color , TTF_Font* font ){
