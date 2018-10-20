@@ -29,7 +29,7 @@ SpaceScenario::SpaceScenario() : GameObject() {
 
 void    SpaceScenario::_frameUpdate(){
     handlePlayerInput();
-    //handleNetwork();
+    handleNetwork();
 }
 
 

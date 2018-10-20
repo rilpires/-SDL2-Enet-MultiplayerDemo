@@ -1,7 +1,5 @@
 #include "structs.hpp"
 
-void _print( const std::string& a ){ std::cout << a << std::endl ; }
-
 Vector2 Vector2::normalized(){
     float length = this->length();
     if( length < 0.00001 ) 

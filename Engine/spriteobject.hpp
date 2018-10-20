@@ -20,7 +20,7 @@ class SpriteObject : public TransformObject{
 
         SpriteObject( const char* path );
         SpriteObject( SDL_Surface* surf = NULL );
-        SpriteObject( Vector2 filled_rect , uint border_0_is_filled = 0 , uint8_t r = 255 , uint8_t g = 255 , uint8_t b = 255 , uint8_t a = 255 );
+        SpriteObject( Vector2 filled_rect , uint32_t border_0_is_filled = 0 , uint8_t r = 255 , uint8_t g = 255 , uint8_t b = 255 , uint8_t a = 255 );
         ~SpriteObject();
         
         SDL_Texture*    getTexture() const {return tex;};

@@ -13,7 +13,7 @@ Renderer::Renderer( SDL_Window* sdl_window , SDL_Renderer* rend ){
 }
 
 SDL_Surface*      Renderer::getSurface( const char* resource_path ){
-    return loaded_surfaces[ string( resource_path ) ];
+    return loaded_surfaces[std::string( resource_path ) ];
 }
 
 void Renderer::drawEverything( std::map< int , std::vector < SpriteObject* > > all_objects ){
@@ -51,10 +51,10 @@ void Renderer::drawEverything( std::map< int , std::vector < SpriteObject* > > a
 
 
 void     Renderer::loadSurface( const char* resource_path ){
-    string name(resource_path);
+	std::string name(resource_path);
     SDL_Surface* s;
-    if( name.find(".jpg") != string::npos ){
-        cout << "Loading jpg images are not supported" << name << endl;
+    if( name.find(".jpg") != std::string::npos ){
+		std::cout << "Loading jpg images are not supported" << name << std::endl;
         return;
     }else{
         s = IMG_Load( getResPath(resource_path).c_str() ); 

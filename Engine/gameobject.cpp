@@ -13,7 +13,7 @@ GameObject::GameObject( uint8_t _obj_type ){
 }
 GameObject::~GameObject(){
 	if (!to_delete)
-		cout << "You should'nt call delete on gameobjects!!!! use queueDelete() instead " << endl;
+		std::cout << "You should'nt call delete on gameobjects!!!! use queueDelete() instead " << std::endl;
 	if (getParent() != NULL) {
 		getParent()->removeChild(this);
 	}

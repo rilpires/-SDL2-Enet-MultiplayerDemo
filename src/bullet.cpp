@@ -26,7 +26,7 @@ void Bullet::_frameUpdate(){
 }
 
 void Bullet::_collidesWith( PhysicObject* other ){
-    if( other->name.find("Ship") != string::npos ){
+    if( other->name.find("Ship") != std::string::npos ){
         static_cast<Ship*>(other)->takeHit();
         lifetime_in_frames = 999;
     }

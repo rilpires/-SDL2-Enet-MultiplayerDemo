@@ -4,12 +4,6 @@
 #include <math.h>
 #include <iostream>
 
-using namespace std;
-
-#include <ostream>
-void _print( const std::string& a );
-
-
 struct Vector2{
     float x;
     float y;
@@ -80,7 +74,7 @@ inline float Vector2::angle() const {
 inline float Vector2::length() const {
     return pow( pow( x , 2 ) + pow( y , 2 ) , 0.5 );
 }
-
+std::ostream& operator<< (std::ostream& os, const Vector2& v);
 
 // Rect2 INLINES ============>
 inline Rect2::Rect2(){
@@ -101,6 +95,5 @@ inline Rect2::Rect2( float _x , float _y , float _w , float _h ){
     w = _w;
     h = _h;
 }
-std::ostream& operator<< ( std::ostream& os , const Vector2& v );
 
 #endif

@@ -26,7 +26,7 @@ SpriteObject::SpriteObject( const char* path ) : TransformObject( GAMEOBJECT_TYP
     texture_center = Vector2( surface->w , surface->h )*0.5;
     scale = Vector2(1,1);
 }
-SpriteObject::SpriteObject( Vector2 filled_rect , uint border , uint8_t r , uint8_t g , uint8_t b , uint8_t a ) : 
+SpriteObject::SpriteObject( Vector2 filled_rect , uint32_t border , uint8_t r , uint8_t g , uint8_t b , uint8_t a ) :
         TransformObject( GAMEOBJECT_TYPE_RENDER ) {    
     surface = SDL_CreateRGBSurfaceWithFormat(0,filled_rect.x,filled_rect.y,32,SDL_PIXELFORMAT_RGBA32);
     SDL_Rect rect; rect.x = 0 ; rect.y = 0 ; rect.w = filled_rect.x ; rect.h = filled_rect.y;
