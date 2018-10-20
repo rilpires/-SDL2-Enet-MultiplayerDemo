@@ -47,14 +47,8 @@ SpaceServer::SpaceServer(std::string ip_address ){
 
 void SpaceServer::addNewPeer( ENetPeer* peer ){
     peers.push_back( peer );
-
-    ENetAddress address;
-    address.port = peer->address.port;
-    char ip_address[256];
-    enet_address_get_host_ip( &(peer->address) , ip_address , 256 );
-    enet_address_set_host( &address , ip_address );
-    
-    ENetPacket* packet = enet_packet_create( (void*)&address , sizeof(ENetAddress) , ENET_PACKET_FLAG_RELIABLE );
+    ENetAddress address = peer->address;
+    ENetPacket* packet = enet_packet_create( static_cast<void*>(&address) , sizeof(ENetAddress) , ENET_PACKET_FLAG_RELIABLE );
     for( auto it = peers.begin() ; it != peers.end() ; it ++) if( *it != peer ){
         enet_peer_send( *it , 0 , packet );
     }
