@@ -4,9 +4,8 @@
 *.dll
 *.cmake
 **/Makefile
-CMakeFiles
-Engine/enet-1.3.13/CMakeFiles
-CMakeCache.txt
+**/CMakeFiles
+**/CMakeCache.txt
 app
 server
 

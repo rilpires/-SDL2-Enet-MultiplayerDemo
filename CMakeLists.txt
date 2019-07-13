@@ -25,7 +25,7 @@ target_include_directories( ${EXECUTABLE_NAME}
     PUBLIC include 
 )
 target_link_directories(${EXECUTABLE_NAME} 
-    PUBLIC Engine/enet-1.3.13
+    PUBLIC Engine/enet
 )
 target_link_libraries( ${EXECUTABLE_NAME} 
     ${ENGINE_NAME}
@@ -39,10 +39,10 @@ target_sources( ${EXECUTABLE_SERVER}
     PRIVATE Server/server.cpp
 )
 target_include_directories( ${EXECUTABLE_SERVER} 
-    PRIVATE Engine/enet-1.3.13/include
+    PRIVATE Engine/enet/include
 )
 target_link_directories( ${EXECUTABLE_SERVER} 
-    PRIVATE Engine/enet-1.3.13
+    PRIVATE Engine/enet
 )
 target_link_libraries( ${EXECUTABLE_SERVER}
     enet 
