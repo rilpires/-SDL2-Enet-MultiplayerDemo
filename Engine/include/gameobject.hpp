@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "structs.hpp"
+#include <structs.hpp>
 
 enum GAMEOBJECT_TYPE : uint8_t { 
     GAMEOBJECT_TYPE_DEFAULT = 0 , 

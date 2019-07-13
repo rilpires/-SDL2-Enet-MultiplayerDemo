@@ -1,8 +1,8 @@
 #ifndef PHYSIC_OBJECT_H
 #define PHYSIC_OBJECT_H
 
-#include "transformobject.hpp"
-#include "structs.hpp"
+#include <transformobject.hpp>
+#include <structs.hpp>
 #include <map>
 
 class PhysicObject : public TransformObject {

@@ -1,4 +1,4 @@
-#include "bullet.hpp"
+#include <bullet.hpp>
 
 Bullet::Bullet( Ship* ship ) : PhysicObject() {
     lifetime_in_frames = 0;

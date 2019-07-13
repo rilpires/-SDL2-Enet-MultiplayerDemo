@@ -1,4 +1,4 @@
-#include "input.hpp"
+#include <input.hpp>
 
 
 std::map<Sint32,Input::Key> Input::keys;

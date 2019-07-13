@@ -1,4 +1,4 @@
-#include "initial_scene.hpp"
+#include <initial_scene.hpp>
 
 InitialScene::InitialScene( Renderer* rend , PhysicServer* server ):GameObject(GAMEOBJECT_TYPE_INITIAL_SCENE)
 {

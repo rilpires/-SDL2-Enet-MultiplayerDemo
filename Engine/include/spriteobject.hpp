@@ -1,8 +1,8 @@
 #ifndef SPRITE_OBJECT_H
 #define SPRITE_OBJECT_H
 
-#include "transformobject.hpp"
-#include <SDL.h>
+#include <transformobject.hpp>
+#include <SDL2/SDL.h>
 
 
 class Renderer;

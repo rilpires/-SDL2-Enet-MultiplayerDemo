@@ -1,5 +1,5 @@
-#include "spriteobject.hpp"
-#include "initial_scene.hpp"
+#include <spriteobject.hpp>
+#include <initial_scene.hpp>
 
 
 SpriteObject::SpriteObject( SDL_Surface* surf ) : TransformObject( GAMEOBJECT_TYPE_RENDER ) {

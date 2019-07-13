@@ -1,4 +1,4 @@
-#include "structs.hpp"
+#include <structs.hpp>
 
 Vector2 Vector2::normalized(){
     float length = this->length();

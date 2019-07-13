@@ -1,4 +1,4 @@
-#include "physic_object.hpp"
+#include <physic_object.hpp>
 
 
 PhysicObject::PhysicObject() : TransformObject( GAMEOBJECT_TYPE_PHYSIC ) {

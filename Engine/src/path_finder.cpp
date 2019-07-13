@@ -1,6 +1,6 @@
-#include "path_finder.hpp"
+#include <path_finder.hpp>
 #include <cstring>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #ifdef _WIN32
     const char PATH_SEP = '\\';
@@ -15,7 +15,7 @@ std::string getResDirPath(){
 
 
 
-    string str = string( SDL_GetBasePath() ) + string("res") + PATH_SEP;
+    string str = string( SDL_GetBasePath() ) + string("resources") + PATH_SEP;
     return str;
 
 }

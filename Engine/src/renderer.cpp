@@ -1,5 +1,5 @@
-#include "path_finder.hpp"
-#include "renderer.hpp"
+#include <path_finder.hpp>
+#include <renderer.hpp>
 
 SDL_Renderer*                                Renderer::sdl_renderer = NULL;
 std::map<std::string,SDL_Surface*>           Renderer::loaded_surfaces;

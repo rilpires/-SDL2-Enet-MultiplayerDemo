@@ -1,7 +1,7 @@
 #ifndef TRANSFORM_OBJECT_H
 #define TRANSFORM_OBJECT_H
 
-#include "gameobject.hpp"
+#include <gameobject.hpp>
 
 class TransformObject : public GameObject {
     protected:

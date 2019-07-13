@@ -1,5 +1,5 @@
-#include "gameobject.hpp"
-#include "physic_object.hpp"
+#include <gameobject.hpp>
+#include <physic_object.hpp>
 
 int GameObject::open_id = 0;
 

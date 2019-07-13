@@ -1,6 +1,6 @@
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <engine.hpp>
 
 Uint32 main_timer_tick( Uint32 interval , void* param );
