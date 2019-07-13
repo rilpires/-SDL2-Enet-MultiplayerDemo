@@ -7,7 +7,7 @@ set( ENGINE_NAME myengine )
 file( GLOB ENGINE_SOURCE Engine/src/*.cpp )
 add_library( ${ENGINE_NAME} ${ENGINE_SOURCE} )
 target_include_directories( ${ENGINE_NAME} 
-    PUBLIC Engine/include Engine/enet-1.3.13/include 
+    PUBLIC Engine/include Engine/enet/include 
 )
 target_link_libraries( ${ENGINE_NAME} 
     SDL2 SDL2_image SDL2_ttf 
@@ -25,7 +25,7 @@ target_include_directories( ${EXECUTABLE_NAME}
     PUBLIC include 
 )
 target_link_directories(${EXECUTABLE_NAME} 
-    PUBLIC Engine/enet
+    PUBLIC Engine/enet/.libs
 )
 target_link_libraries( ${EXECUTABLE_NAME} 
     ${ENGINE_NAME}
@@ -42,7 +42,7 @@ target_include_directories( ${EXECUTABLE_SERVER}
     PRIVATE Engine/enet/include
 )
 target_link_directories( ${EXECUTABLE_SERVER} 
-    PRIVATE Engine/enet
+    PRIVATE Engine/enet/.libs
 )
 target_link_libraries( ${EXECUTABLE_SERVER}
     enet 
